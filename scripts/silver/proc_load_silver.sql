@@ -201,7 +201,15 @@ BEGIN
 	id,
 	cat,
 	subcat,
-	maintenance
+	 TRIM(
+	    REPLACE(
+	      REPLACE(
+	        REPLACE(maintenance, CHAR(13), ''),  
+	        CHAR(10), ''                     
+	      ),
+	      CHAR(9), ''                           
+	    )
+		) AS maintenance
 	from bronze.erp_px_cat_g1v2;
     SET end_time = NOW();
     SET duration_seconds = TIMESTAMPDIFF(SECOND, start_time, end_time);
