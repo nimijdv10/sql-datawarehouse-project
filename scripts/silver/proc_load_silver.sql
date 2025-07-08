@@ -54,7 +54,7 @@ BEGIN
 	cst_create_date
 	from(
 	select *, row_number() over(partition by cst_id order by cst_create_date desc) as rnk
-	from bronze.crm_cust_info) t where rnk=1; -- Select the most recent record per customer
+	from bronze.crm_cust_info where cst_id is not null and cst_id!=0) t where rnk=1; -- Select the most recent record per customer
     
     SET end_time = NOW();
     SET duration_seconds = TIMESTAMPDIFF(SECOND, start_time, end_time);
